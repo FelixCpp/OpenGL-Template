@@ -3,6 +3,8 @@ project "Spdlog"
 	language "C++"
 	cppdialect "C++11"
 	defines { "SPDLOG_COMPILED_LIB" }
+	targetdir("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+	objdir("%{wks.location}/bin/intermediates/" .. outputdir .. "/%{prj.name}")
 
 	files {
 		"include/**.h",
