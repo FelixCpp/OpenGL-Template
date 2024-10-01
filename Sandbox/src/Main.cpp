@@ -7,15 +7,12 @@
 
 int main()
 {
-	const auto logger = spdlog::stdout_color_mt("Console");
-	logger->set_level(spdlog::level::trace);
-	logger->set_pattern("%^[%T] %n: %v%$");
-	logger->set_error_handler([](const std::string& message)
+	spdlog::set_level(spdlog::level::trace);
+	spdlog::set_pattern("%^[%l - %T]: %v%$");
+	spdlog::set_error_handler([](const std::string& message)
 	{
 		std::cerr << "Logging-Error: " << message << std::endl;
 	});
-
-	set_default_logger(logger);
 
 	if (not glfwInit())
 	{
@@ -86,8 +83,6 @@ int main()
 
 	glfwSetKeyCallback(window, [](GLFWwindow* window, const int key, const int scancode, const int action, const int mods)
 	{
-		spdlog::debug("Key: {0}, Scancode: {1}, Action: {2}, Mods: {3}", key, scancode, action, mods);
-
 		if (action == GLFW_PRESS and key == GLFW_KEY_ESCAPE)
 		{
 			glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -97,14 +92,13 @@ int main()
 	while (not glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
-		
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+		glClearColor(0.392f, 0.584f, 0.929f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glfwSwapBuffers(window);
 	}
 
-	spdlog::debug("Shutting down");
 	glfwDestroyWindow(window);
 	glfwTerminate();
 
